@@ -1,0 +1,125 @@
+Free crud api  - https://beeceptor.com/crud-api/#scrollhere , https://crudcrud.com/
+
+
+// async applyDiscounts(body: any): Promise<any> {
+//     const {
+//       connID,
+//       locationID,
+//       tpcID,
+//       cartItems: rawCartItems,
+//       order:rawOrder,
+//       loyaltyId,
+//       coupon,
+//     } = body;
+
+//     console.log("inside the applyDiscounts===",body);
+//     let tpcDoc;
+
+//     // const tpcDoc: any = await this.couchbaseService.getDocumentById(
+//     //   tpcID,
+//     //   'thirdPartyConfiguration',
+//     //   connID,
+//     // );
+
+//     // console.log("tpcDoc===",tpcDoc)
+
+//     const locationDoc: any = await this.couchbaseService.getDocumentById(
+//       locationID,
+//       'location',
+//       connID,
+//     );
+
+//     console.log("after location fetch====");
+
+//     const order = JSON.parse(atob(rawOrder));
+//     console.log("order data after parsing===",order);
+    
+//     const cartItems = JSON.parse(atob(rawCartItems));
+
+//     console.log("cartItems after parsing data===",cartItems);
+    
+
+//     console.log("after parsing oredr & cart data====");
+
+//     let totalAmount = 0;
+//     const skanDataItems = await Promise.all(
+//       cartItems.map(async (item: any) => {
+//         const category: any = await this.couchbaseService.getDocumentById(
+//           item.catID,
+//           'item',
+//           connID,
+//         );
+//         totalAmount += item.subtotal;
+//         return {
+//           categoryId: item.catID,
+//           categoryName: category.name || 'General',
+//           quantity: item.quantity || 1,
+//           itemName: item.name ||"coco cola" ,
+//           upcCode: item.upc,
+//           sku: item.sku,
+//           unitPrice: item.itemPrice,
+//           totalPrice: item.subTotal,
+//         };
+//       }),
+//     );
+
+//     const data = {
+//       merchantId: this.utilsService.encryptData(locationID),
+//       rcn: tpcDoc?.rcn || 888888,
+//       posName: tpcDoc?.posName || "GRETA",
+//       // orderCreatedDate: this.formatToOffsetISO(order.dateCreated),
+//       orderCreatedDate: new Date(order.dateCreated).toISOString(),
+//       loyaltyId,
+//       currency: locationDoc?.currency || 'USD',
+//       transactionId: order.transactionID,
+//       items: skanDataItems,
+//       tax: order.tax,
+//       totalAmount: order.total,
+//       finalAmount:20,
+//       coupon,
+//     };
+    
+
+//     console.log("data created===",data)
+
+//     const baseUrl = this.configService.get<string>('SKANDATA_API_URL');
+//     const config = {
+//       method: 'POST',
+//       url: `${baseUrl}/Freekwent/api/v1/discounts/apply`,
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       data,
+//       auth: {
+//         username: this.configService.get<string>('SKANDATA_API_USERNAME')!,
+//         password: this.configService.get<string>('SKANDATA_API_PASSWORD')!,
+//       },
+//     };
+//     const response = await this.retryHttpService.requestWithRetry(config, {
+//       allowedMethods: ['POST'],
+//     });
+
+//     return response.data;
+//   }
+
+
+[
+    {
+      "catID": "D7E5FBC4-7F56-4283-BE8D-4DBC20A01D37",
+      "categoryName": "Beverages",
+      "itemName": "Coca Cola 500ml",
+      "sku": "SKU12345",
+      "upc": "049000050103",
+      "quantity": 5,
+      "itemPrice": 1,
+      "subTotal": 5
+    }
+  ]
+  "order": {
+"dateCreated":1757589168000,
+"transactionID":"0003BCE8-DE72-4FC7-A7E5-4BCF83A2BDE6",
+"tax":0.5,
+"total":4
+ }
+
+
