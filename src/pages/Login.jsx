@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import AuthForm from '../components/AuthForm'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../features/Auth/AuthSlice';
+import { login, resetStatusAndError } from '../features/Auth/AuthSlice';
 
 const Login = () => {
 
     const dispatch = useDispatch();
-    const {loginStatus,loginError} = useSelector((state)=> state.auth);
+    const {loginStatus,loginError,signupStatus} = useSelector((state)=> state.auth);
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -19,6 +19,12 @@ const Login = () => {
         }
 
     },[loginStatus,loginError])
+
+    useEffect(()=>{
+        return ()=>{
+            dispatch(resetStatusAndError())
+        }
+    },[loginStatus,signupStatus,dispatch])
 
     const onSubmit = (payload)=>{
         dispatch(login(payload))

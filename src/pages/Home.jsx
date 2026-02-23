@@ -25,7 +25,7 @@ const Home = () => {
     const dispatch = useDispatch();
     const modalRef = useRef(null);
     const closeRef = useRef(null);
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
 
     const handleDragEnd = (event) => {
         const { active, over } = event;

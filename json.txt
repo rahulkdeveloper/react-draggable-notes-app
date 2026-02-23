@@ -123,3 +123,59 @@ Free crud api  - https://beeceptor.com/crud-api/#scrollhere , https://crudcrud.c
  }
 
 
+import { useState } from 'react'
+import './App.css'
+import { Navbar } from './components/Navbar';
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import PrivateRoute from './routes/PrivateRoute';
+import PublicRoute from './routes/PublicRoute';
+import AddExpense from './pages/AddExpense';
+import AminationAlert from './components/AminationAlert';
+import PrivateLayout from './routes/PrivateLayout';
+
+function AppContent() {
+  const location = useLocation()
+
+
+  return (
+    <div>
+
+
+      <AminationAlert />
+      <div className='container'>
+        {["/login", "signup"].includes(location.pathname) ? (
+          <Routes>
+            <Route path='/signup' element={<PublicRoute><Signup /></PublicRoute>}></Route>
+            <Route path='/login' element={<PublicRoute><Login /></PublicRoute>}></Route>
+
+          </Routes>
+        ) : (
+          <div>
+            <Navbar />
+            <Routes>
+
+
+              <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+              <Route path="/add-expense" element={<PrivateRoute><AddExpense /></PrivateRoute>} />
+
+            </Routes>
+          </div>
+        )}
+
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+export default App
